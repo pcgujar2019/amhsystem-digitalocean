@@ -1,0 +1,72 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Custom fonts for this template-->
+  <link href="{% static 'css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Custom styles for this template-->
+  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/mystyles.css' %}" rel="stylesheet">
+  <title>AMHSYSTEM | Login</title>
+</head>
+
+<body>
+  <div class="row justify-content-center">
+    <div class="col-xl-5 col-lg-5">
+      <div class="card shadow mb-4 mt-5 ml-5 p-4">
+        <!-- Card Header  -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h2 class="m-0 font-weight-bold text-primary">Aaradhya Maternity Home</h2>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+          <div class="login-form">
+            <div class="row mt-4">
+              <div class="col-md-6 ">
+                {% if error %}
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endif %}
+                <form method="POST">
+                  {% csrf_token %}
+
+                  {% if messages %}
+                  {% for message in messages %}
+                  <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                      {{ message }}
+                    </div>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+                  {{login_form|crispy}}
+                  <button type="submit" class="btn btn-primary mt-3">Login</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

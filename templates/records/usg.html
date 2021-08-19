@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h2 class="m-0 font-weight-bold text-primary">Investigations & USG ({{ patient.full_name }})</h2>
+                <form action="{% url 'viewpatient' patient.id %}" method="GET">
+                    <button class="btn btn-warning"><i class="fas fa-arrow-left pr-3"></i>BACK</button>
+                </form>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="navigation d-flex flex-row mb-5 mt-3 justify-content-center">
+                    <div>
+                        <form action="{% url 'investigations' patient_pk=patient.id %}" method="get">
+                            <button class="btn btn-secondary mr-5">Investigations</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form action="{% url 'usg' patient_pk=patient.id %}" method="get">
+                            <button class="btn btn-primary mr-5">USG</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form action="{% url 'ttdose' patient_pk=patient.id %}" method="get">
+                            <button class="btn btn-secondary mr-2">TT Dose</button>
+                        </form>
+                    </div>
+                </div>
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="usg border border-secondary p-4 border-left-secondary mt-5">
+
+                        <h3 class="text-info mt-3 font-weight-bold">USG</h3>
+                        <div class="row mt-3">
+                            <div class="col-10">
+                                <div class="row">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Viability - 7-10 wks</th>
+                                                <th scope="col">Tick </th>
+                                                <th scope="col">Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">NT- 11-13+6</th>
+                                                <td>{{ form.r1_check|as_crispy_field }}</td>
+                                                <td>{{ form.r1_comment|as_crispy_field }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">FTS</th>
+                                                <td>{{ form.r2_check|as_crispy_field }}</td>
+                                                <td>{{ form.r2_comment|as_crispy_field }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">QUAD- 16-20 wks SOS</th>
+                                                <td>{{ form.r3_check|as_crispy_field }}</td>
+                                                <td>{{ form.r3_comment|as_crispy_field }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Anomaly- 18-20 wks</th>
+                                                <td>{{ form.r4_check|as_crispy_field }}</td>
+                                                <td>{{ form.r4_comment|as_crispy_field }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Eco- 22-24 wks</th>
+                                                <td>{{ form.r5_check|as_crispy_field }}</td>
+                                                <td>{{ form.r5_comment|as_crispy_field }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Growth - 30 wks</th>
+                                                <td>{{ form.r6_check|as_crispy_field }}</td>
+                                                <td>{{ form.r6_comment|as_crispy_field }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Growth - 34 wks SOS</th>
+                                                <td>{{ form.r7_check|as_crispy_field }}</td>
+                                                <td>{{ form.r7_comment|as_crispy_field }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Growth/Liquor - 37-38</th>
+                                                <td>{{ form.r8_check|as_crispy_field }}</td>
+                                                <td>{{ form.r8_comment|as_crispy_field }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Fatal Weight - 39-40</th>
+                                                <td>{{ form.r9_check|as_crispy_field }}</td>
+                                                <td>{{ form.r9_comment|as_crispy_field }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {{form.instructions|as_crispy_field}}
+
+                                {% if isformexists %}
+                                <button type="submit" name='update' class="btn btn-danger mt-3">UPDATE</button>
+                                {% else %}
+                                <button type="submit" name='save' class="btn btn-primary mt-3">SAVE</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{% url 'investigationsreport' patient.id %}" method="get">
+                    <button type="submit" class="btn btn-success mt-5">PRINT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block jquery %}
+<script>
+    $(document).ready(function () {
+
+    });
+</script>
+{% endblock %}

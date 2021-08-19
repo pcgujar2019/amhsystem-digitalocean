@@ -1,0 +1,78 @@
+{% extends "base.html" %} {% load static %}
+{% load crispy_forms_tags %}{% block content %}
+
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h2 class="m-0 font-weight-bold text-primary">Edit Patient ({{ patient.full_name }})</h2>
+                <form action="{% url 'viewpatient' patient.id %}" method="GET">
+                    <button class="btn btn-warning"><i class="fas fa-arrow-left pr-3"></i>BACK</button>
+                </form>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    {{ form.full_name|as_crispy_field }}
+                                    {{ form.address_line_1|as_crispy_field }}
+                                    {{ form.pin_code|as_crispy_field }}
+                                    {{ form.referred_by|as_crispy_field }}
+                                    {{ form.is_anc|as_crispy_field }}
+                                    {{ form.is_inf|as_crispy_field }}
+                                    {{ form.is_gynac|as_crispy_field }}
+                                </div>
+                                <div class="form-group col-md-3">
+                                    {{ form.case_paper_number|as_crispy_field }}
+                                    {{ form.gender|as_crispy_field }}
+                                    {{ form.address_line_2|as_crispy_field }}
+                                    {{ form.mobile_number|as_crispy_field }}
+
+                                </div>
+                                <div class="form-group col-md-3">
+                                    {{ form.age|as_crispy_field }}
+                                    {{ form.birth_date|as_crispy_field }}
+                                    {{ form.city|as_crispy_field }}
+                                    {{ form.email|as_crispy_field }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-danger mt-3">UPDATE</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %} {% block jquery %}
+<script>
+    $(document).ready(function () {
+        $("#id_birth_date").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+    });
+</script>
+{% endblock %}

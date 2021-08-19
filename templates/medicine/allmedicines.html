@@ -1,0 +1,90 @@
+{% extends "base.html" %} {% block content %}
+
+{% load static %}
+{% block css %}
+
+{% endblock css %}
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h3 class="m-0 font-weight-bold text-primary">All Medicines
+                    {% if medicines %}
+                    <small>
+                        ({{ medicines.count}})
+                    </small>
+                    {% endif %}
+                </h3>
+
+                <div class="col-sm-3 mt-2 d-flex flex-row justify-content-end">
+                    <form action="{% url 'addmedicine' %}" method="GET">
+                        <button class="btn btn-danger"><i class="fas fa-plus pr-2"></i>ADD NEW</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% if medicines %}
+                <div class="table-responsive">
+
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Brand</th>
+                                <th>Form</th>
+                                <th>Dosage</th>
+                                <th>Date Added</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for medicine in medicines %}
+                            <tr>
+                                <td>{{medicine.name}}</td>
+                                <td>{{medicine.brand}}</td>
+                                <td>{{medicine.form}}</td>
+                                <td>{{medicine.morning_quantity}} - {{medicine.afternoon_quantity}} -
+                                    {{medicine.evening_quantity}}</td>
+                                <td>{{medicine.date_added|date:"M d, Y"}}</td>
+                                <td>
+                                    <form action="{% url 'editmedicine' medicine.id %}" method="GET">
+                                        <button type="submit" class="btn btn-primary btn-sm"
+                                            name="view">View/Edit</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center">
+                    <h2>No Medicines Found!</h2>
+                    <br>
+                    <a role="button" class="btn btn-primary" href="{% url 'addmedicine' %}">New Medicine</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block jquery %}
+<!-- Page level plugins -->
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{% static 'js/datatables-demo.js' %}"></script>
+{% endblock jquery %}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescriptions</title>
+    <style>
+        .patient-info-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.2em;
+        }
+
+
+        p {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <!--  Pdf header (Clinic, hospital info) -->
+    <div class="pdf-header">
+        <div class="logo">
+            <img src="https://firebasestorage.googleapis.com/v0/b/amhsystem-d4450.appspot.com/o/pdfheader.png?alt=media&token=52c96764-f1fb-4b71-bfbf-eae68d0040c4"
+                id="pdf-header">
+        </div>
+    </div>
+    <hr>
+
+    <!-- Patient Information -->
+    <div class="patient-info">
+        <table class="patient-info-table">
+            <thead>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Full Name: <b>{{ patient.full_name }}</b></td>
+                    <td>Age: <b>{{ patient.age }}</b></td>
+                    <td>Gender:<b> {{ patient.gender }}</b></td>
+                </tr>
+                <tr>
+                    <td>Address:<b> {{ patient.city }}</b></td>
+                    <td>Number: <b>{{ patient.mobile_number }}</b></td>
+                    <td>Case Paper Number:<b> {{ patient.case_paper_number }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+
+    <section>
+        <img src="https://firebasestorage.googleapis.com/v0/b/amhsystem-d4450.appspot.com/o/rx-icon.png?alt=media&token=51c90eb4-74c1-42aa-b280-64d8b58dec41"
+            alt="" width="35px">
+    </section>
+
+    <section>
+        {% for prescription in prescriptions %}
+        <p>
+            {{prescription.name}}
+            <br>
+
+            {% ifequal prescription.morning_quantity '' %}
+            0 ------
+            {% else %}
+            {{prescription.morning_quantity}} ------
+            {% endifequal %}
+
+            {% ifequal prescription.afternoon_quantity '' %}
+            0 ------
+            {% else %}
+            {{prescription.afternoon_quantity}} ------
+            {% endifequal %}
+
+            {% ifequal prescription.evening_quantity '' %}
+            0 ------
+            {% else %}
+            {{prescription.evening_quantity}}
+            {% endifequal %}
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            ({{ prescription.no_of_days }} days)
+        </p>
+        {% endfor %}
+    </section>
+
+    <br><br>
+    <hr>
+    <p>Next Visit: </p>
+
+
+</body>
+
+</html>

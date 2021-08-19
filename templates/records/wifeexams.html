@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h2 class="m-0 font-weight-bold text-primary">Examinations: (Wife) - ({{ patient.full_name }})</h2>
+                <form action="{% url 'viewpatient' patient.id %}" method="GET">
+                    <button class="btn btn-warning"><i class="fas fa-arrow-left pr-3"></i>BACK</button>
+                </form>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="form border border-warning p-5 border-left-warning mt-5">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ form.amh|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form.fsh|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form.lh|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form.prolactin|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ form.andro|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form.testo|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form.tsh|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form.hb|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{ form.sugar|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ form.hiv|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form.hbsag|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form.vdrl|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.urea|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.creat|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <br>
+                                <hr>
+
+                                <h5>RPL</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.ac_antibodies|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.anti_dsdna|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.bg_antibodies|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.lupus_anticoagulant|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.protein_c|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.protein_s|as_crispy_field }}
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{ form.karyotp|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{ form.other|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{ form.usg|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <br>
+                                <hr>
+
+                                <h5>PLAN</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.lmp|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.day|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        {{ form.plan|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                {% if isformexists %}
+                                <button type="submit" name='update' class="btn btn-danger mt-3">UPDATE</button>
+                                {% else %}
+                                <button type="submit" name='save' class="btn btn-primary mt-3">SAVE</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <form action="{% url 'wifeexamspdf' patient.id %}" method="get">
+                    <button type="submit" class="btn btn-success mt-3">PRINT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block jquery %}
+<script>
+    $(document).ready(function () {
+        //  change date format for lmp
+        $("#id_lmp").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+        $("#id_day").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+    });
+</script>
+{% endblock %}

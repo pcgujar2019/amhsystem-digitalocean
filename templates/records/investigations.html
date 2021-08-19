@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h2 class="m-0 font-weight-bold text-primary">Investigations & USG ({{ patient.full_name }})</h2>
+                <form action="{% url 'viewpatient' patient.id %}" method="GET">
+                    <button class="btn btn-warning"><i class="fas fa-arrow-left pr-3"></i>BACK</button>
+                </form>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="navigation d-flex flex-row mb-5 mt-3 justify-content-center">
+                    <div>
+                        <form action="{% url 'investigations' patient_pk=patient.id %}" method="get">
+                            <button class="btn btn-primary mr-5">Investigations</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form action="{% url 'usg' patient_pk=patient.id %}" method="get">
+                            <button class="btn btn-secondary mr-5">USG</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form action="{% url 'ttdose' patient_pk=patient.id %}" method="get">
+                            <button class="btn btn-secondary mr-2">TT Dose</button>
+                        </form>
+                    </div>
+                </div>
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="investigation border border-success p-4 border-left-success">
+
+                        <h3 class="text-info mt-3 font-weight-bold">Investigations</h3>
+                        <div class="row mt-3">
+                            <div class="col-sm-10">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">DATE</th>
+                                            <th scope="col">{{ form.date1|as_crispy_field }}</th>
+                                            <th scope="col">{{ form.date2|as_crispy_field }}</th>
+                                            <th scope="col">{{ form.date3|as_crispy_field }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">HB</th>
+                                            <td>{{ form.hb_on_date1|as_crispy_field }}</td>
+                                            <td>{{ form.hb_on_date2|as_crispy_field }}</td>
+                                            <td>{{ form.hb_on_date3|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">BLOOD GROUP</th>
+                                            <td>{{ form.bloodGroup|as_crispy_field }}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">BSL-R</th>
+                                            <td>{{ form.bslr_on_date1|as_crispy_field }}</td>
+                                            <td>{{ form.bslr_on_date2|as_crispy_field }}</td>
+                                            <td>{{ form.bslr_on_date3|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">GCT</th>
+                                            <td>{{ form.gct_on_date1|as_crispy_field }}</td>
+                                            <td>{{ form.gct_on_date2|as_crispy_field }}</td>
+                                            <td>{{ form.gct_on_date3|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">AUST ANTG</th>
+                                            <td>{{ form.aust_antg_on_date1|as_crispy_field }}</td>
+                                            <td>{{ form.aust_antg_on_date2|as_crispy_field }}</td>
+                                            <td>{{ form.aust_antg_on_date3|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">ELISA</th>
+                                            <td>{{ form.elisa_on_date1|as_crispy_field }}</td>
+                                            <td>{{ form.elisa_on_date2|as_crispy_field }}</td>
+                                            <td>{{ form.elisa_on_date3|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">TSH</th>
+                                            <td>{{ form.tsh_on_date1|as_crispy_field }}</td>
+                                            <td>{{ form.tsh_on_date2|as_crispy_field }}</td>
+                                            <td>{{ form.tsh_on_date3|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">URINE</th>
+                                            <td>{{ form.urine_on_date1|as_crispy_field }}</td>
+                                            <td>{{ form.urine_on_date2|as_crispy_field }}</td>
+                                            <td>{{ form.urine_on_date3|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">{{ form.empty11|as_crispy_field }}</th>
+                                            <td>{{ form.empty12|as_crispy_field }}</td>
+                                            <td>{{ form.empty13|as_crispy_field }}</td>
+                                            <td>{{ form.empty14|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">{{ form.empty21|as_crispy_field }}</th>
+                                            <td>{{ form.empty22|as_crispy_field }}</td>
+                                            <td>{{ form.empty23|as_crispy_field }}</td>
+                                            <td>{{ form.empty24|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">{{ form.empty31|as_crispy_field }}</th>
+                                            <td>{{ form.empty32|as_crispy_field }}</td>
+                                            <td>{{ form.empty33|as_crispy_field }}</td>
+                                            <td>{{ form.empty34|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">{{ form.empty41|as_crispy_field }}</th>
+                                            <td>{{ form.empty42|as_crispy_field }}</td>
+                                            <td>{{ form.empty43|as_crispy_field }}</td>
+                                            <td>{{ form.empty44|as_crispy_field }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {{ form.instructions|as_crispy_field }}
+
+                            </div>
+                        </div>
+                        {% if isformexists %}
+                        <button type="submit" name='update' class="btn btn-danger mt-3">UPDATE</button>
+                        {% else %}
+                        <button type="submit" name='save' class="btn btn-primary mt-3">SAVE</button>
+                        {% endif %}
+                    </div>
+                </form>
+
+                <form action="{% url 'investigationsreport' patient.id %}" method="get">
+                    <button type="submit" class="btn btn-success mt-5">PRINT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block jquery %}
+<script>
+    $(document).ready(function () {
+        $("#id_date1").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+        $("#id_date2").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+        $("#id_date3").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,251 @@
+{% extends "base.html" %} {% block content %}
+
+
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h2 class="m-0 font-weight-bold text-primary">View Patient ({{ patient.full_name }})</h2>
+                <form action="{% url 'allpatients' %}" method="GET">
+                    <button class="btn btn-warning"><i class="fas fa-arrow-left pr-3"></i>BACK</button>
+                </form>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body mt-3">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <div class="border border-success p-4 border-left-success">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="text-success">Personal Information</h5>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Name</th>
+                                        <td>{{ patient.full_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Address</th>
+                                        <td>{{ patient.address_line_1 }},
+                                            {{ patient.address_line_2 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Mobile</th>
+                                        <td colspan="2">{{ patient.mobile_number }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Birth Date</th>
+                                        <td colspan="2">{{ patient.birth_date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Date Added</th>
+                                        <td colspan="2">{{patient.date_added}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-md-5">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Case Paper</th>
+                                        <td>{{ patient.case_paper_number }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Age</th>
+                                        <td>{{ patient.age }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">City</th>
+                                        <td>{{ patient.city }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Email</th>
+                                        <td colspan="2">{{ patient.email }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Referred By</th>
+                                        <td colspan="2">{{ patient.referred_by }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2 mb-5">
+                        <div class="col-1">
+                            <form action="{% url 'editpatient' patient.id %}" method="GET">
+                                <button type="submit" class="btn btn-success">EDIT</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- REPORTS -->
+                <div class="border border-warning p-4 border-left-warning mt-5">
+                    <div class="row">
+                        <div class="col-5">
+                            <h5 class="text-info">Case Paper & Reports</h5>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+
+                        {% if perms.main.delete_patient %}
+                        {% if patient.is_anc %}
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card_title">ANC PAPER</h5>
+                                    <form action="{% url 'ancfirstblock' patient_pk=patient.id %}" method="GET">
+                                        <button type="submit" class="btn btn-primary btn-sm">ADD/VIEW</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+
+
+                        {% if perms.main.delete_patient %}
+                        {% if patient.is_inf %}
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card_title">INF PAPER</h5>
+                                    <form action="{% url 'infplanonefirstblock' patient.id %}" method="GET">
+                                        <button type="submit" class="btn btn-primary btn-sm">ADD/VIEW</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if perms.main.delete_patient %}
+                        {% if patient.is_gynac %}
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card_title">GYNAC PAPER</h5>
+                                    <form action="{% url 'gynacfirstblock' patient.id %}" method="GET">
+                                        <button type="submit" class="btn btn-primary btn-sm">ADD/VIEW</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card_title">Prescriptions</h5>
+                                    <form action="{% url 'addprescription' patient.id %}" class="d-inline" method="GET">
+                                        <button type="submit" class="btn btn-primary btn-sm">ADD</button>
+                                    </form>
+                                    <form action="{% url 'allprescriptions' patient.id %}" class="d-inline"
+                                        method="GET">
+                                        <button type="submit" class="btn btn-primary btn-sm">View All</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card_title">Investigations</h5>
+                                    <form action="{% url 'investigations' patient.id %}" method="GET">
+                                        <button type="submit" class="btn btn-primary btn-sm">ADD/VIEW</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if perms.main.delete_patient %}
+                    {% if patient.is_inf %}
+                    <div class="row mt-5">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card_title">Fertility Sheet</h5>
+                                    <form action="{% url 'fertilitysheet' patient.id %}" method="GET">
+                                        <button type="submit" class="btn btn-primary btn-sm">ADD/VIEW</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card_title">Male Medical History</h5>
+                                    <form action="{% url 'malehistory' patient.id %}" method="GET">
+                                        <button type="submit" class="btn btn-primary btn-sm">ADD/VIEW</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card_title">Examinations: (Wife)</h5>
+                                    <form action="{% url 'wifeexams' patient.id %}" method="GET">
+                                        <button type="submit" class="btn btn-primary btn-sm">ADD/VIEW</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+
+                <br><br><br>
+                {% if perms.main.delete_patient %}
+                <div class="row border border-danger p-4 border-left-danger mt-5">
+                    <div class="col-3">
+                        <form action="{% url 'deletepatient' patient.id %}" method="GET">
+                            <button type="submit" class="btn btn-danger mt-3 btn-sm"
+                                onclick="return confirm('Are you sure? This patient might have records and OPD papers.');">DELETE
+                                PATIENT</button>
+                        </form>
+                    </div>
+                    <h5 class="text-danger mt-3">Warning: Once the patient is deleted, it can not be undone.
+                        All reports and case papers associated with that patient will be deleted permanently.</h5>
+                </div>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

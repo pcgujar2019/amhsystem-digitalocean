@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h2 class="m-0 font-weight-bold text-primary">Male Medical History ({{ patient.full_name }})</h2>
+                <form action="{% url 'viewpatient' patient.id %}" method="GET">
+                    <button class="btn btn-warning"><i class="fas fa-arrow-left pr-3"></i>BACK</button>
+                </form>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="form border border-success p-5 border-left-success mt-5">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        {{ form.husband_name|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ form.husband_age|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ form.husband_work|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th>Semen Analysis</th>
+                                                    <th>I</th>
+                                                    <th>II</th>
+                                                    <th>III</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Count-(millions)</td>
+                                                    <td>{{ form.sperm_count_I|as_crispy_field }}</td>
+                                                    <td>{{ form.sperm_count_II|as_crispy_field }}</td>
+                                                    <td>{{ form.sperm_count_III|as_crispy_field }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Motility-(%)</td>
+                                                    <td>{{ form.sperm_motility_I|as_crispy_field }}</td>
+                                                    <td>{{ form.sperm_motility_II|as_crispy_field }}</td>
+                                                    <td>{{ form.sperm_motility_III|as_crispy_field }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        {{ form.surgical_dm_htn_comment|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        {{ form.usg_of_scrotum_comment|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <br>
+
+                                <h5>Investigations:</h5>
+                                <div class="row">
+                                    <div class="col-6">
+                                        {{ form.fhs_report|as_crispy_field }}
+                                    </div>
+                                    <div class="col-6">
+                                        {{ form.lh_report|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        {{ form.testosterone_report|as_crispy_field }}
+                                    </div>
+                                    <div class="col-6">
+                                        {{ form.hiv_report|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        {{ form.medical_history|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <br>
+
+                                <h5>Rx Currently Taking: :</h5>
+                                <div class="row">
+                                    <div class="col-6">
+                                        {{ form.allergic_to|as_crispy_field }}
+                                    </div>
+                                    <div class="col-6">
+                                        {{ form.past_treatment_at_our_clinic|as_crispy_field }}
+                                    </div>
+                                </div>
+
+                                {% if isformexists %}
+                                <button type="submit" name='update' class="btn btn-danger mt-3">UPDATE</button>
+                                {% else %}
+                                <button type="submit" name='save' class="btn btn-primary mt-3">SAVE</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+                <form action="{% url 'malehistorypdf' patient.id %}" method="get">
+                    <button type="submit" class="btn btn-success mt-3">PRINT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block jquery %}
+<script>
+    $(document).ready(function () {
+
+    });
+</script>
+{% endblock %}

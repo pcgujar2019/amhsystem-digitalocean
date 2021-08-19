@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h3 class="m-0 font-weight-bold text-primary">Add Medicine</h3>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="row justify-content-md-center">
+                        <div class="alert alert-danger col-md-auto" role="alert">
+                            {{ message }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <div class="row mt-5 border border-warning p-4 border-left-warning">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    {{ form.name|as_crispy_field }}
+                                    <br>
+                                    {{ form.is_in_morning|as_crispy_field }}
+                                    <br>
+                                    {{ form.is_in_afternoon|as_crispy_field }}
+                                    <br>
+                                    {{ form.is_in_evening|as_crispy_field }}
+                                </div>
+                                <div class="form-group col-md-3">
+                                    {{ form.brand|as_crispy_field }}
+                                    {{ form.morning_time|as_crispy_field }}
+                                    {{ form.afternoon_time|as_crispy_field }}
+                                    {{ form.evening_time|as_crispy_field }}
+                                </div>
+                                <div class="form-group col-md-3">
+                                    {{ form.form|as_crispy_field }}
+                                    {{ form.morning_quantity|as_crispy_field }}
+                                    {{ form.afternoon_quantity|as_crispy_field }}
+                                    {{ form.evening_quantity|as_crispy_field }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-9">
+                                    {{ form.instructions|as_crispy_field }}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">SAVE</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block jquery %}
+<script>
+    $(document).ready(function () {
+
+
+
+    });
+</script>
+{% endblock %}

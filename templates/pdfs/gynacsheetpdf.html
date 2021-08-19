@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF VIEW</title>
+    <style>
+        body {
+            padding-left: 10px;
+            font-size: 1.25em;
+        }
+
+        .patient-info-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.2em;
+        }
+
+        .patient-info-table td,
+        .patient-info-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .head-container h1 {
+            font-size: 20px;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .head-container p.address {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+
+
+
+
+
+
+
+
+
+        /* ANC SHEET */
+        .visit_no .date_added {
+            float: left;
+            display: inline;
+
+        }
+
+
+        .g_table thead tr th {
+            text-align: left;
+        }
+
+        .g_table td,
+        .g_table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .visit1_last_table th {
+            text-align: right;
+        }
+    </style>
+</head>
+
+
+
+
+
+
+
+<body>
+    <!--  Pdf header (Clinic, hospital info) -->
+    <!-- <div class="pdf-header">
+        <div class="logo">
+            <img src="https://firebasestorage.googleapis.com/v0/b/amhsystem-d4450.appspot.com/o/pdfheader.png?alt=media&token=52c96764-f1fb-4b71-bfbf-eae68d0040c4"
+                id="pdf-header">
+        </div>
+    </div> -->
+    <!-- <hr> -->
+
+    <div class="head-container">
+        <table>
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <p>Dr. Pramod Bhoi <br>
+                            M.B.B.S, D.G.O. (Mumbai) <br>
+                            Timing: 10AM-2PM & 5PM-8PM <br>
+                            Mob: 9890025632
+                        </p>
+                    </td>
+                    <td>
+                        <h1>Aaradhya Maternity Home</h1>
+                        <p class="address">Shivaji Chowk, Peth Vadgaon, <br>
+                            Dist-Kolhapur - 416 112
+                        </p>
+                    </td>
+                    <td>
+                        <p>Dr. Pallavi Bhoi <br>
+                            B.D.S (Mumbai) <br>
+                            Timing: 10AM-1PM & 4PM-8PM <br>
+                            Mob: 7887352260
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+
+
+    <!-- Patient Information -->
+    <div class="patient-info">
+        <table class="patient-info-table">
+            <thead>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Name: <b>{{ patient.full_name }}</b></td>
+                    <td>Age: <b>{{ patient.age }}</b></td>
+                    <td>Gender:<b> {{ patient.gender }}</b></td>
+                </tr>
+                <tr>
+                    <td>Address:<b> {{ patient.city }}</b></td>
+                    <td>Mobile: <b>{{ patient.mobile_number }}</b></td>
+                    <td>Case Paper:<b> {{ patient.case_paper_number }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- GYNAC Sheet PDF -->
+    <section>
+        <h1 style="text-align: center;">GYNAC SHEET</h1>
+        <table class="anc_sheet_table">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Date:</b> {{ firstblock.date_added }}
+                    </td>
+                    <td>
+                        {% if firstblock.is_married %}
+                        <b>Married:</b> Yes
+                        {% else %}
+                        <b>Married:</b> No
+                        {% endif %}
+                    </td>
+                    <td>
+                        <b>Married Since:</b> {{ firstblock.married_since }} Years
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+        <table class="g_table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Type</th>
+                    <th>Age</th>
+                    <th>Sex</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        G1
+                    </td>
+                    <td>
+                        {{ firstblock.g1 }}
+                    </td>
+                    <td>
+                        {{ firstblock.g1_age }}
+                    </td>
+                    <td>
+                        {{ firstblock.g1_sex }}
+                    </td>
+                    <td>
+                        {{ firstblock.g1_comment }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        G2
+                    </td>
+                    <td>
+                        {{ firstblock.g2 }}
+                    </td>
+                    <td>
+                        {{ firstblock.g2_age }}
+                    </td>
+                    <td>
+                        {{ firstblock.g2_sex }}
+                    </td>
+                    <td>
+                        {{ firstblock.g2_comment }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        G3
+                    </td>
+                    <td>
+                        {{ firstblock.g3 }}
+                    </td>
+                    <td>
+                        {{ firstblock.g3_age }}
+                    </td>
+                    <td>
+                        {{ firstblock.g3_sex }}
+                    </td>
+                    <td>
+                        {{ firstblock.g3_comment }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        G4
+                    </td>
+                    <td>
+                        {{ firstblock.g4 }}
+                    </td>
+                    <td>
+                        {{ firstblock.g4_age }}
+                    </td>
+                    <td>
+                        {{ firstblock.g4_sex }}
+                    </td>
+                    <td>
+                        {{ firstblock.g4_comment }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        G5
+                    </td>
+                    <td>
+                        {{ firstblock.g5 }}
+                    </td>
+                    <td>
+                        {{ firstblock.g5_age }}
+                    </td>
+                    <td>
+                        {{ firstblock.g5_sex }}
+                    </td>
+                    <td>
+                        {{ firstblock.g5_comment }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="visit1_last_table">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Family Completed:</b> {{ firstblock.is_family_completed }}
+                    </td>
+                    <td>
+                        <b>TL:</b> {{ firstblock.is_tl_done }}
+                    </td>
+                    <td>
+                        <b>FLU:</b> {{ firstblock.flu_date }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr><br>
+
+        {% for otherblock in otherblocks %}
+        <table class="other_visits">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Date:</b> {{ otherblock.date_added }}
+                    </td>
+                    <td>
+                        <b>LMP:</b> {{ otherblock.lmp }} Years
+                    </td>
+                    <td>
+                        <b>Scan s/o:</b> {{otherblock.scan_date}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>Weight:</b> {{ otherblock.weight }} Kg
+                    </td>
+                    <td>
+                        <b>c/o</b> {{ otherblock.co }}
+                    </td>
+                    <td>
+                        <b>Advised:</b> {{otherblock.advised}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>BP:</b> {{ otherblock.bp }}
+                    </td>
+                    <td>
+                        <b>FLU:</b> {{ otherblock.flu_date }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>Description</b> {{ otherblock.scan_description }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr><br>
+        {% endfor %}
+
+
+
+
+</body>
+
+</html>

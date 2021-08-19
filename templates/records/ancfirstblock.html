@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h2 class="m-0 font-weight-bold text-primary">CASE PAPER - ANC ({{ patient.full_name }})</h2>
+                <form action="{% url 'viewpatient' patient.id %}" method="GET">
+                    <button class="btn btn-warning"><i class="fas fa-arrow-left pr-3"></i>BACK</button>
+                </form>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="navigation d-flex flex-row">
+                    <div>
+                        <form action="{% url 'ancfirstblock' patient_pk=patient.id %}" method="get">
+                            <button class="btn btn-primary mr-2">
+                                Visit 1 <br>
+                                {% if ismainform %}
+                                <small>{{ mainform.date_added.value }}</small>
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
+                    <div class="d-flex flex-row">
+                        {% for otherform in otherforms %}
+                        <div>
+                            <form action="{% url 'ancotherblocks' patient_pk=patient.id visit_no=otherform.visit_no %}"
+                                method="get">
+                                <button class="btn btn-secondary mr-2">
+                                    Visit {{ otherform.visit_no }} <br>
+                                    <small>{{ otherform.date_added }}</small>
+                                </button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if ismainform %}
+                    <div>
+                        <form action="{% url 'ancotherblocks' patient_pk=patient.id visit_no=newformnumber %}"
+                            method="get">
+                            <button class="btn btn-danger mr-2">
+                                Add New <br>
+                                +
+                            </button>
+                        </form>
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                <div class="first-block border border-success p-4 border-left-success mt-5">
+                    <div class="d-flex justify-content-center">
+                        <h4 class="text-primary">VISIT - 1</h4>
+                    </div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row mt-3">
+                            <div class="col-md-10 ">
+                                <table class="table table-borderless">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ mainform.date_added|as_crispy_field }}</td>
+                                            <td>{{ mainform.married_since|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ mainform.consanguinity|as_crispy_field }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-8">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Age</th>
+                                            <th>Sex</th>
+                                            <th>Comment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>G1</th>
+                                            <td>{{ mainform.g1|as_crispy_field }}</td>
+                                            <td>{{ mainform.g1_age|as_crispy_field }}</td>
+                                            <td>{{ mainform.g1_sex|as_crispy_field }}</td>
+                                            <td>{{ mainform.g1_comment|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>G2</th>
+                                            <td>{{ mainform.g2|as_crispy_field }}</td>
+                                            <td>{{ mainform.g2_age|as_crispy_field }}</td>
+                                            <td>{{ mainform.g2_sex|as_crispy_field }}</td>
+                                            <td>{{ mainform.g2_comment|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>G3</th>
+                                            <td>{{ mainform.g3|as_crispy_field }}</td>
+                                            <td>{{ mainform.g3_age|as_crispy_field }}</td>
+                                            <td>{{ mainform.g3_sex|as_crispy_field }}</td>
+                                            <td>{{ mainform.g3_comment|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>G4</th>
+                                            <td>{{ mainform.g4|as_crispy_field }}</td>
+                                            <td>{{ mainform.g4_age|as_crispy_field }}</td>
+                                            <td>{{ mainform.g4_sex|as_crispy_field }}</td>
+                                            <td>{{ mainform.g4_comment|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>G5</th>
+                                            <td>{{ mainform.g5|as_crispy_field }}</td>
+                                            <td>{{ mainform.g5_age|as_crispy_field }}</td>
+                                            <td>{{ mainform.g5_sex|as_crispy_field }}</td>
+                                            <td>{{ mainform.g5_comment|as_crispy_field }}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <table class="table table-borderless">
+                                    <thead></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ mainform.present_pregnancy|as_crispy_field }}</td>
+                                            <td>{{ mainform.lmp|as_crispy_field }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ mainform.visit_no|as_crispy_field }}</td>
+                                            <td>{{ mainform.flu_date|as_crispy_field }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% if ismainform %}
+                        <div class="row justify-content-center">
+                            <div class="col-3">
+                                <button type="submit" name='mainblockupdate' class="btn btn-danger mt-3">UPDATE</button>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="row justify-content-center">
+                            <div class="col-3">
+                                <button type="submit" name='mainblocksave'
+                                    class="btn btn-primary mt-3 justify-content-center">SAVE</button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block jquery %}
+<script>
+    $(document).ready(function () {
+        $('input[name="visit_no"]').attr('readonly', true);
+
+        //  change date format for lmp
+        $("#id_lmp").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+        $("#id_date_added").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+
+
+        $("#id_flu_date").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+
+        //  set today's date for Anc first block
+        ismainform = '{{ismainform}}'
+        if (ismainform != 'True') {
+            var today = new Date();
+            var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+            $('#id_date_added').val(date);
+
+            //  set visit no for first block.
+            $('#id_visit_no').val('1');
+        }
+
+
+
+    });
+</script>
+{% endblock %}

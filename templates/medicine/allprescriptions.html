@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h2 class="m-0 font-weight-bold text-primary">All Prescriptions
+                    <small>(For {{ patient.full_name }})</small>
+                </h2>
+                <div class="back-button" style="margin-left: 350px;">
+                    <form action="{% url 'viewpatient' patient.id %}" method="GET">
+                        <button class="btn btn-warning"><i class="fas fa-arrow-left pr-3"></i>BACK</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="py-3 d-flex flex-row-reverse">
+                <div class="add-new-button">
+                    <form action="{% url 'addprescription' patient.id %}" method="GET">
+                        <button class="btn btn-danger"><i class="fas fa-plus pr-3"></i>ADD NEW</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+
+                <div>
+                    {% if listoflistofp %}
+                    <div class="row mt-4">
+                        <div class="col-10">
+
+                            {% for listofp in listoflistofp %}
+                            <div class="border border-warning p-4 border-left-warning">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Days</th>
+                                            <th>Notes</th>
+                                            <th>Date Prescribed</th>
+                                        </tr>
+                                    </thead>
+                                    {% for prescription in listofp %}
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ prescription.name }}</td>
+                                            <td>{{ prescription.morning_quantity }}</td>
+                                            <td> - </td>
+                                            <td>{{ prescription.afternoon_quantity }}</td>
+                                            <td> - </td>
+                                            <td>{{ prescription.evening_quantity }}</td>
+                                            <td>({{ prescription.no_of_days }})</td>
+                                            <td>{{ prescription.instructions }}</td>
+                                            <td>{{ prescription.date_prescribed }}</td>
+                                        </tr>
+                                    </tbody>
+                                    {% endfor %}
+                                </table>
+                                <form action="" method="get">
+                                    <button class="btn btn-success">Print</button>
+                                </form>
+                            </div>
+
+                            <br>
+                            <hr><br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block jquery %}
+<script>
+    $(document).ready(function () {
+
+    });
+</script>
+{% endblock %}

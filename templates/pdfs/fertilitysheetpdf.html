@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF VIEW</title>
+    <style>
+        body {
+            padding-left: 10px;
+            font-size: 1.25em;
+        }
+
+        .patient-info-table,
+        .basic-info-table,
+        .symptoms-table,
+        .family-history-table,
+        .prior-treatment-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.2em;
+        }
+
+        .prior-treatment-table thead tr th {
+            text-align: left;
+        }
+
+        .prior-treatment-table tbody tr td {
+            text-align: center;
+        }
+
+        .prior-treatment-table td,
+        .prior-treatment-table th,
+        .patient-info-table td,
+        .patient-info-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        p,
+        span {
+            font-size: 1.2em;
+        }
+
+        .head-container h1 {
+            font-size: 20px;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .head-container p.address {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!--  Pdf header (Clinic, hospital info) -->
+    <!-- <div class="pdf-header">
+        <div class="logo">
+            <img src="https://firebasestorage.googleapis.com/v0/b/amhsystem-d4450.appspot.com/o/pdfheader.png?alt=media&token=52c96764-f1fb-4b71-bfbf-eae68d0040c4"
+                id="pdf-header">
+        </div>
+    </div> -->
+    <!-- <hr> -->
+
+    <div class="head-container">
+        <table>
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <p>Dr. Pramod Bhoi <br>
+                            M.B.B.S, D.G.O. (Mumbai) <br>
+                            Timing: 10AM-2PM & 5PM-8PM <br>
+                            Mob: 9890025632
+                        </p>
+                    </td>
+                    <td>
+                        <h1>Aaradhya Maternity Home</h1>
+                        <p class="address">Shivaji Chowk, Peth Vadgaon, <br>
+                            Dist-Kolhapur - 416 112
+                        </p>
+                    </td>
+                    <td>
+                        <p>Dr. Pallavi Bhoi <br>
+                            B.D.S (Mumbai) <br>
+                            Timing: 10AM-1PM & 4PM-8PM <br>
+                            Mob: 7887352260
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+
+
+    <!-- Patient Information -->
+    <div class="patient-info">
+        <table class="patient-info-table">
+            <thead>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Name: <b>{{ patient.full_name }}</b></td>
+                    <td>Age: <b>{{ patient.age }}</b></td>
+                    <td>Gender:<b> {{ patient.gender }}</b></td>
+                </tr>
+                <tr>
+                    <td>Address:<b> {{ patient.city }}</b></td>
+                    <td>Mobile: <b>{{ patient.mobile_number }}</b></td>
+                    <td>Case Paper:<b> {{ patient.case_paper_number }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+    <!-- Fertility Sheet PDF -->
+    <section>
+        <h1 style="text-align: center;">FERTILITY SHEET</h1>
+        <div class="fertility-sheet">
+
+            <table class="basic-info-table">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Height: <b>{{ fertilitysheet.height }}</b></td>
+                        <td>Weight: <b>{{ fertilitysheet.weight }}</b></td>
+                        <td>BMI:<b> {{ fertilitysheet.bmi }}</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>How Many months have you been trying to conceive? -
+            <b> {{ fertilitysheet.trying_for_years }} Yrs and {{ fertilitysheet.trying_for_months }} Months</b>
+        </p>
+        <br>
+
+        <h1>Menstrual History</h1>
+        <p>Menstrual Cycle: <b> {{ fertilitysheet.menstrual_cycle }}</b></p>
+
+        <p>How many days bleeding do you have? - <b>{{ fertilitysheet.bleeding_days }} days</b></p>
+
+        <p>LMP: <b>{{ fertilitysheet.lmp }} </b></p>
+
+        <p>Cycle: <b>{{ fertilitysheet.cycle }} </b></p>
+
+        <p>Do you need medication to bring on a period? - <b>{{ fertilitysheet.medication_needed_for_period }}</b></p>
+
+        <p>Age of menopause in Mother: <b>{{ fertilitysheet.mother_menopause_age }} </b></p>
+        <br>
+
+
+        <h1>Sexual History</h1>
+        <p>Intercourse per week: <b>{{ fertilitysheet.intercourse_per_week }} </b></p>
+        <br>
+
+        <h1>Surgical History</h1>
+        <p>Have you had any surgeries? <b>{{ fertilitysheet.is_had_surgery }} </b>
+            <br>
+        </p>
+        <p>Comment on surgery: <b>{{fertilitysheet.surgery_comment }}</b></p>
+        <br>
+
+
+
+
+
+
+
+
+        <h1>Physical Symptoms</h1>
+        <table class="symptoms-table">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Recent Weight gain/Loss: <b>{{ fertilitysheet.is_recent_weight_gain_or_loss }}</b></td>
+                    <td>Anorexia/Bulimia: <b>{{ fertilitysheet.is_anorexia_bulimia }}</b></td>
+                    <td>Diabetes: <b> {{ fertilitysheet.is_diabetes }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>Hair Loss: <b>{{ fertilitysheet.is_hair_loss }}</b></td>
+                    <td>Lumps: <b>{{ fertilitysheet.is_lumps }}</b></td>
+                    <td>Tuberculosis: <b> {{ fertilitysheet.is_tuberculosis }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>Asthma: <b>{{ fertilitysheet.is_asthma }}</b></td>
+                    <td>Seizures/Epilepsy: <b>{{ fertilitysheet.is_seizures_epilepsy }}</b></td>
+                    <td>Migraine/Headaches:<b> {{ fertilitysheet.is_migraine_headaches }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>Hepatitis: <b>{{ fertilitysheet.is_hepatitis }}</b></td>
+                    <td>Vaginal Infections: <b>{{ fertilitysheet.is_vaginal_infections }}</b></td>
+                    <td>Hign B.P: <b> {{ fertilitysheet.is_high_bp }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <br>
+
+
+    <section>
+        <h1>Family History</h1>
+        <table class="family-history-table">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Diabetes - Mother: <b>{{ fertilitysheet.is_mother_diabetic }}</b></td>
+                    <td>Father: <b>{{ fertilitysheet.is_father_diabetic }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>HTN - Mother: <b>{{ fertilitysheet.is_mother_htn }}</b></td>
+                    <td>Father: <b>{{ fertilitysheet.is_mother_htn }}</b></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </section>
+    <br>
+
+
+    <section>
+        <h1>Prior Test:</h1>
+        <p>Laparoscopy Findings: {{ fertilitysheet.laparoscopy_findings }}</p>
+        <p>HSG: {{ fertilitysheet.hsg_findings }}</p>
+    </section>
+    <br>
+
+    <section>
+        <h1>Prior Treatment</h1>
+        <table class="prior-treatment-table">
+            <thead>
+                <tr>
+                    <th>Treatment</th>
+                    <th>#of cycles</th>
+                    <th>TIC</th>
+                    <th>IUI</th>
+                    <th>Pregnant(Yes/No)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>L.L.</b></td>
+                    <td><b>{{ fertilitysheet.ll_no_of_cycles_1 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_tic_1 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_iui_1 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_pregnant_1 }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>C.C.</b></td>
+                    <td><b>{{ fertilitysheet.ll_no_of_cycles_2 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_tic_2 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_iui_2 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_pregnant_2 }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>C.C./L.L.+HMG</b></td>
+                    <td><b>{{ fertilitysheet.ll_no_of_cycles_3 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_tic_3 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_iui_3 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_pregnant_3 }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>Only HMG</b></td>
+                    <td><b>{{ fertilitysheet.ll_no_of_cycles_4 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_tic_4 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_iui_4 }}</b></td>
+                    <td><b>{{ fertilitysheet.ll_pregnant_4 }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <br>
+
+
+
+    <p><b>IVF(I): {{ fertilitysheet.ivf_comment_I }}</b></p>
+    <p><b>IVF(II): {{ fertilitysheet.ivf_comment_II }}</b></p>
+
+
+    <!-- USG Report -->
+
+
+</body>
+
+</html>

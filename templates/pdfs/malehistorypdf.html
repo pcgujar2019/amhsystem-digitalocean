@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF VIEW</title>
+    <style>
+        body {
+            padding-left: 10px;
+            font-size: 1.25em;
+        }
+
+        p {
+            font-size: 1.25em;
+        }
+
+        .semen-analysis-table,
+        .basic-info-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.2em;
+        }
+
+        .patient-info-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.2em;
+        }
+
+        .patient-info-table td,
+        .patient-info-table th,
+        .semen-analysis-table td,
+        .semen-analysis-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .semen-analysis-table thead tr th {
+            text-align: left;
+        }
+
+        .semen-analysis-table tbody tr td {
+            text-align: left;
+        }
+
+        .head-container h1 {
+            font-size: 20px;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .head-container p {
+            font-size: 1.1em;
+        }
+
+        .head-container p.address {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!--  Pdf header (Clinic, hospital info) -->
+    <!-- <div class="pdf-header">
+        <div class="logo">
+            <img src="https://firebasestorage.googleapis.com/v0/b/amhsystem-d4450.appspot.com/o/pdfheader.png?alt=media&token=52c96764-f1fb-4b71-bfbf-eae68d0040c4"
+                id="pdf-header">
+        </div>
+    </div> -->
+    <div class="head-container">
+        <table>
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <p>Dr. Pramod Bhoi <br>
+                            M.B.B.S, D.G.O. (Mumbai) <br>
+                            Timing: 10AM-2PM & 5PM-8PM <br>
+                            Mob: 9890025632
+                        </p>
+                    </td>
+                    <td>
+                        <h1>Aaradhya Maternity Home</h1>
+                        <p class="address">Shivaji Chowk, Peth Vadgaon, <br>
+                            Dist-Kolhapur - 416 112
+                        </p>
+                    </td>
+                    <td>
+                        <p>Dr. Pallavi Bhoi <br>
+                            B.D.S (Mumbai) <br>
+                            Timing: 10AM-1PM & 4PM-8PM <br>
+                            Mob: 7887352260
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+
+    <!-- Patient Information -->
+    <div class="patient-info">
+        <table class="patient-info-table">
+            <thead>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Name: <b>{{ patient.full_name }}</b></td>
+                    <td>Age: <b>{{ patient.age }}</b></td>
+                    <td>Gender:<b> {{ patient.gender }}</b></td>
+                </tr>
+                <tr>
+                    <td>Address:<b> {{ patient.city }}</b></td>
+                    <td>Mobile: <b>{{ patient.mobile_number }}</b></td>
+                    <td>Case Paper:<b> {{ patient.case_paper_number }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+    <section>
+        <h1 style="text-align: center;">MALE MEDICAL HISTORY</h1>
+        <div class="male-history">
+            <table class="basic-info-table">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Husband's Name: <b>{{ malehistory.husband_name }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>Husband's Age: <b>{{ malehistory.husband_age }}</b></td>
+                        <td>Husband's Work: <b> {{ malehistory.husband_work }}</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <table class="semen-analysis-table">
+            <thead>
+                <tr>
+                    <th>Semen Analysis</th>
+                    <th>I</th>
+                    <th>II</th>
+                    <th>III</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Count (millions)</b></td>
+                    <td><b>{{ malehistory.sperm_count_I }}</b></td>
+                    <td><b>{{ malehistory.sperm_count_II }}</b></td>
+                    <td><b>{{ malehistory.sperm_count_III }}</b></td>
+                </tr>
+
+                <tr>
+                    <td><b>Motility (%)</b></td>
+                    <td><b>{{ malehistory.sperm_motility_I }}</b></td>
+                    <td><b>{{ malehistory.sperm_motility_II }}</b></td>
+                    <td><b>{{ malehistory.sperm_motility_III }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <br>
+
+    <section>
+        <p>Surgical / DM / HTN: <b>{{ malehistory.surgical_dm_htn_comment }}</b></p>
+        <p>USG of Scrotum: <b>{{ malehistory.usg_of_scrotum_comment }}</b></p>
+    </section>
+
+    <section>
+        <h1>Investigations:</h1>
+        <p>FHS: <b>{{malehistory.fhs_report}}</b></p>
+        <p>LH: <b>{{malehistory.lh_report}}</b></p>
+        <p>Testo.: <b>{{malehistory.testosterone_report}}</b></p>
+        <p>HIV.: <b>{{malehistory.hiv_report}}</b></p>
+    </section>
+
+    <br><br><br>
+
+    <div>
+        <h1>Medical History: <b>{{malehistory.medical_history}}</b></h1>
+    </div>
+
+    <section>
+        <p>Rx Currently Taking</p>
+        <p>Husband- <b>{{malehistory.current_rx_husband}}</b></p>
+        <p>Wife- <b>{{malehistory.current_rx_wife}}</b></p>
+        <br>
+        <p>Allergic To any medications: <b>{{malehistory.allergic_to}}</b></p>
+        <p>Past treatment at our clinic: <b>{{malehistory.past_treatment_at_our_clinic}}</b></p>
+    </section>
+
+
+</body>
+
+</html>

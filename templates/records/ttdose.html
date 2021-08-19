@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-10 col-lg-10">
+        <div class="card shadow mb-4 mt-5 ml-5 p-4">
+            <!-- Card Header  -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h2 class="m-0 font-weight-bold text-primary">Investigations & USG ({{ patient.full_name }})</h2>
+                <form action="{% url 'viewpatient' patient.id %}" method="GET">
+                    <button class="btn btn-warning"><i class="fas fa-arrow-left pr-3"></i>BACK</button>
+                </form>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-danger col-md-6" role="alert">
+                        {{ message }}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <div class="navigation d-flex flex-row mb-5 mt-3 justify-content-center">
+                    <div>
+                        <form action="{% url 'investigations' patient_pk=patient.id %}" method="get">
+                            <button class="btn btn-secondary mr-5">Investigations</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form action="{% url 'usg' patient_pk=patient.id %}" method="get">
+                            <button class="btn btn-secondary mr-5">USG</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form action="{% url 'ttdose' patient_pk=patient.id %}" method="get">
+                            <button class="btn btn-primary mr-2">TT Dose</button>
+                        </form>
+                    </div>
+                </div>
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="tt border border-success p-4 border-left-success mt-5">
+                        <h3 class="text-info mt-3 font-weight-bold">TT Dose</h3>
+
+                        <div class="col-sm-5 mt-5">
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">TT - 1st Dose</th>
+                                        <th scope="col">{{ form.tt1_date|as_crispy_field }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">TT - 2nd Dose</th>
+                                        <td>{{ form.tt2_date|as_crispy_field }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            {{ form.instructions|as_crispy_field }}
+                        </div>
+                        {% if isformexists %}
+                        <button type="submit" name='update' class="btn btn-danger mt-3">UPDATE</button>
+                        {% else %}
+                        <button type="submit" name='save' class="btn btn-primary mt-3">SAVE</button>
+                        {% endif %}
+                    </div>
+                </form>
+
+                <form action="{% url 'investigationsreport' patient.id %}" method="get">
+                    <button type="submit" class="btn btn-success mt-5">PRINT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block jquery %}
+<script>
+    $(document).ready(function () {
+        $("#id_tt1_date").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+        $("#id_tt2_date").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+    });
+</script>
+{% endblock %}

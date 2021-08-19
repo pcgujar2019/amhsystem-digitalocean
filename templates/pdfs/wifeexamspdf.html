@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF VIEW</title>
+    <style>
+        body {
+            padding-left: 10px;
+            font-size: 1.25em;
+        }
+
+        p {
+            font-size: 1.25em;
+        }
+
+        .patient-info-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.2em;
+        }
+
+        .patient-info-table td,
+        .patient-info-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .basic-info-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.2em;
+        }
+
+        .semen-analysis-table thead tr th {
+            text-align: left;
+        }
+
+        .semen-analysis-table tbody tr td {
+            text-align: left;
+        }
+
+        p,
+        span {
+            font-size: 1.2em;
+        }
+
+        .head-container h1 {
+            font-size: 20px;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .head-container p {
+            font-size: 1.1em;
+        }
+
+        .head-container p.address {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!--  Pdf header (Clinic, hospital info) -->
+    <!-- <div class="pdf-header">
+        <div class="logo">
+            <img src="https://firebasestorage.googleapis.com/v0/b/amhsystem-d4450.appspot.com/o/pdfheader.png?alt=media&token=52c96764-f1fb-4b71-bfbf-eae68d0040c4"
+                id="pdf-header">
+        </div>
+    </div>
+    <hr> -->
+    <div class="head-container">
+        <table>
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <p>Dr. Pramod Bhoi <br>
+                            M.B.B.S, D.G.O. (Mumbai) <br>
+                            Timing: 10AM-2PM & 5PM-8PM <br>
+                            Mob: 9890025632
+                        </p>
+                    </td>
+                    <td>
+                        <h1>Aaradhya Maternity Home</h1>
+                        <p class="address">Shivaji Chowk, Peth Vadgaon, <br>
+                            Dist-Kolhapur - 416 112
+                        </p>
+                    </td>
+                    <td>
+                        <p>Dr. Pallavi Bhoi <br>
+                            B.D.S (Mumbai) <br>
+                            Timing: 10AM-1PM & 4PM-8PM <br>
+                            Mob: 7887352260
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+
+    <!-- Patient Information -->
+    <div class="patient-info">
+        <table class="patient-info-table">
+            <thead>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Name: <b>{{ patient.full_name }}</b></td>
+                    <td>Age: <b>{{ patient.age }}</b></td>
+                    <td>Gender:<b> {{ patient.gender }}</b></td>
+                </tr>
+                <tr>
+                    <td>Address: <b> {{ patient.city }}</b></td>
+                    <td>Mobile: <b>{{ patient.mobile_number }}</b></td>
+                    <td>Case Paper: <b> {{ patient.case_paper_number }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+    <section>
+        <h1 style="text-align: center;">EXAMINATIONS (WIFE)</h1>
+        <div class="wife-exams">
+            <table class="basic-info-table">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AMH: <b>{{ wifeexams.amh }}</b></td>
+                        <td>FSH: <b>{{ wifeexams.fsh }}</b></td>
+                        <td>LH: <b> {{ wifeexams.lh }}</b></td>
+                        <td>PROLACTIN: <b> {{ wifeexams.prolactin }}</b></td>
+                    </tr>
+
+                    <tr>
+                        <td>ANDRO.: <b>{{ wifeexams.andro }}</b></td>
+                        <td>TESTO.: <b>{{ wifeexams.testo }}</b></td>
+                    </tr>
+
+                    <tr>
+                        <td>TSH: <b> {{ wifeexams.tsh }}</b></td>
+                        <td>Hb.: <b> {{ wifeexams.hb }}</b></td>
+                    </tr>
+
+                    <tr>
+                        <td>HbA1C: <b>{{ wifeexams.hba1c }}</b></td>
+                        <td>SUGAR(R/F/PP): <b>{{ wifeexams.sugar }}</b></td>
+                    </tr>
+
+                    <tr>
+                        <td>HIV.: <b>{{ wifeexams.hiv }}</b></td>
+                        <td>HBsAg: <b> {{ wifeexams.hbsag }}</b></td>
+                        <td>VDRL: <b>{{ wifeexams.vdrl }}</b></td>
+                    </tr>
+
+                    <tr>
+                        <td>UREA: <b>{{ wifeexams.urea }}</b></td>
+                    </tr>
+
+                    <tr>
+                        <td>CREAT: <b> {{ wifeexams.creat }}</b></td>
+                    </tr>
+
+                    <tr>
+                        <td>Lipid Profile: <b> {{ wifeexams.lipid_profile }}</b></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <br>
+
+    <section>
+        <h1>RPL:</h1>
+        <table class="basic-info-table">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Anti-Cardiolipin antibodies (IgG/IgM): <b>{{ wifeexams.ac_antibodies }}</b></td>
+                    <td>Anti DSDNA: <b>{{ wifeexams.anti_dsdna }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>B2 Glycoprotein antibodies (IgG/IgM): <b>{{ wifeexams.bg_antibodies }}</b></td>
+                    <td>Lupus Anticoagulant.: <b>{{ wifeexams.lupus_anticoagulant }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>Protein C: <b>{{ wifeexams.protein_c }}</b></td>
+                    <td>Protein S.: <b>{{ wifeexams.protein_s }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>Karyotping of (H/W/POC)<b>{{ wifeexams.karyotp }}</b></td>
+                </tr>
+
+                <tr>
+                    <td>Other<b>{{ wifeexams.other }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+
+    <section>
+        <p>USG: <b> {{ wifeexams.usg }}</b></p>
+    </section>
+    <br>
+
+    <section>
+        <h1>PLAN</h1>
+        <p>LMP: <b>{{wifeexams.lmp}}</b></p>
+        <p>DAY: <b>{{wifeexams.day}}</b></p>
+        <p>Comment: {{ wifeexams.plan }}</p>
+    </section>
+
+
+
+</body>
+
+</html>

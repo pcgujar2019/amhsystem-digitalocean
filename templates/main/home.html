@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">HOME</h1>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-download fa-sm text-white-50"></i> Print Records</a>
+</div>
+
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Patients</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ patientcount }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Today's Appointments</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ todayaptscount }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Appointments view -->
+<div class="row">
+
+    <div class="col-xl-6 col-lg-6">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Appointments</h6>
+
+            </div>
+            <!-- Card Body -->
+
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="datepicker">Select Date</label>
+
+                    <div class="d-flex">
+                        <div class="input-group" style="width: 30%;">
+                            <input type="text" class="form-control" id='datepicker' name='datepicker'>
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm ml-3" name='aptsbydate'>SEE
+                            APPOINTMENTS</button>
+                    </div>
+                </form>
+
+                {% if appointments %}
+                <div class="apt-list">
+                    <h6 class="text-info mt-5 mb-3" id="date-heading">Appointments on <b>{{ selectedDateStr }}</b></h6>
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in appointments %}
+                            <tr>
+                                <td>{{ appointment.patient_name }}</td>
+                                <td>{{ appointment.on_date }}</td>
+                                <td>{{ appointment.reason }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% else %}
+                    <h6 class="text-info mt-5"><b>No appointments!</b></h6>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock content %}
+
+{% block jquery %}
+<script>
+    $(document).ready(function () {
+
+        $("#datepicker").datepicker({
+            format: 'dd-mm-yyyy',
+        });
+
+        // set date picker value to today
+        datestr = '{{ selectedDateStr }}'
+        if (datestr == '') {
+            var now = new Date();
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var today = (day) + "-" + (month) + "-" + (now.getFullYear());
+
+            $('#datepicker').val(today);
+            $('#date-heading').text('Appointments on ' + today)
+        } else {
+            $('#datepicker').val(datestr);
+        }
+
+
+    });
+</script>
+{% endblock %}

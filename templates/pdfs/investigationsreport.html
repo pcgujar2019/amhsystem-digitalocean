@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF VIEW</title>
+    <style>
+        body {
+            font-size: 1.25em;
+        }
+
+        .patient-info-table td,
+        .patient-info-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .patient-info-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.2em;
+        }
+
+        .investigation-table {
+            font-size: 1.2em;
+        }
+
+        .investigation-table thead tr th {
+            text-align: left;
+        }
+
+        .investigation-table tbody tr td {
+            text-align: left;
+        }
+
+        .usg-table {
+            font-size: 1.2em;
+        }
+
+        .usg-table thead tr th {
+            text-align: left;
+        }
+
+        .usg-table tbody tr td {
+            text-align: left;
+        }
+
+        .tt-table {
+            font-size: 1.2em;
+        }
+
+        .tt-table thead tr th {
+            text-align: left;
+        }
+
+        .tt-table tbody tr td {
+            text-align: left;
+        }
+
+        p {
+            font-size: 1.2em;
+        }
+
+        .head-container h1 {
+            font-size: 20px;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .head-container p.address {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!--  Pdf header (Clinic, hospital info) -->
+    <!-- <div class="pdf-header">
+        <div class="logo">
+            <img src="https://firebasestorage.googleapis.com/v0/b/amhsystem-d4450.appspot.com/o/pdfheader.png?alt=media&token=52c96764-f1fb-4b71-bfbf-eae68d0040c4"
+                id="pdf-header">
+        </div>
+    </div>
+    <hr> -->
+
+    <div class="head-container">
+        <table>
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <p>Dr. Pramod Bhoi <br>
+                            M.B.B.S, D.G.O. (Mumbai) <br>
+                            Timing: 10AM-2PM & 5PM-8PM <br>
+                            Mob: 9890025632
+                        </p>
+                    </td>
+                    <td>
+                        <h1>Aaradhya Maternity Home</h1>
+                        <p class="address">Shivaji Chowk, Peth Vadgaon, <br>
+                            Dist-Kolhapur - 416 112
+                        </p>
+                    </td>
+                    <td>
+                        <p>Dr. Pallavi Bhoi <br>
+                            B.D.S (Mumbai) <br>
+                            Timing: 10AM-1PM & 4PM-8PM <br>
+                            Mob: 7887352260
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+
+
+    <!-- Patient Information -->
+    <div class="patient-info">
+        <table class="patient-info-table">
+            <thead>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Name: <b>{{ patient.full_name }}</b></td>
+                    <td>Age: <b>{{ patient.age }}</b></td>
+                    <td>Gender:<b> {{ patient.gender }}</b></td>
+                </tr>
+                <tr>
+                    <td>Address:<b> {{ patient.city }}</b></td>
+                    <td>Mobile: <b>{{ patient.mobile_number }}</b></td>
+                    <td>Case Paper:<b> {{ patient.case_paper_number }}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Investigations Report -->
+    <section>
+        <h1 style="text-align: center;">Investigations</h1>
+        <div class="investigations">
+            <table class="investigation-table table-striped">
+                <thead></thead>
+                <tr>
+                    <th>DATE</th>
+                    <th>{{investigation.date1}}</th>
+                    <th>{{investigation.date2}}</th>
+                    <th>{{investigation.date3}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HB</td>
+                        <td>{{investigation.hb_on_date1}}</td>
+                        <td>{{investigation.hb_on_date2}}</td>
+                        <td>{{investigation.hb_on_date3}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>BLOOD GROUP</td>
+                        <td>{{investigation.bloodGroup}}</td>
+                        <td> - </td>
+                        <td> - </td>
+                    </tr>
+
+                    <tr>
+                        <td>BSL-R</td>
+                        <td>{{investigation.bslr_on_date1}}</td>
+                        <td>{{investigation.bslr_on_date2}}</td>
+                        <td>{{investigation.bslr_on_date3}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>GCT</td>
+                        <td>{{investigation.gct_on_date1}}</td>
+                        <td>{{investigation.gct_on_date2}}</td>
+                        <td>{{investigation.gct_on_date3}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>AUST ANTG</td>
+                        <td>{{investigation.aust_antg_on_date1}}</td>
+                        <td>{{investigation.aust_antg_on_date2}}</td>
+                        <td>{{investigation.aust_antg_on_date3}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>ELISA</td>
+                        <td>{{investigation.elisa_on_date1}}</td>
+                        <td>{{investigation.elisa_on_date2}}</td>
+                        <td>{{investigation.elisa_on_date3}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>TSH</td>
+                        <td>{{investigation.tsh_on_date1}}</td>
+                        <td>{{investigation.tsh_on_date2}}</td>
+                        <td>{{investigation.tsh_on_date3}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>URINE</td>
+                        <td>{{investigation.urine_on_date1}}</td>
+                        <td>{{investigation.urine_on_date2}}</td>
+                        <td>{{investigation.urine_on_date3}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{investigation.empty11}}</td>
+                        <td>{{investigation.empty12}}</td>
+                        <td>{{investigation.empty13}}</td>
+                        <td>{{investigation.empty14}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{investigation.empty21}}</td>
+                        <td>{{investigation.empty22}}</td>
+                        <td>{{investigation.empty23}}</td>
+                        <td>{{investigation.empty24}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{investigation.empty31}}</td>
+                        <td>{{investigation.empty32}}</td>
+                        <td>{{investigation.empty33}}</td>
+                        <td>{{investigation.empty34}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{investigation.empty41}}</td>
+                        <td>{{investigation.empty42}}</td>
+                        <td>{{investigation.empty43}}</td>
+                        <td>{{investigation.empty44}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <p>Instructions (IF ANY):-</p>
+    <p>{{ investigation.instructions }}</p>
+    <hr><br>
+
+
+
+
+
+
+
+    <!-- USG Report -->
+    <section>
+        <h1 style="text-align: center;">USG</h1>
+        <div class="usg">
+            <table class="usg-table">
+                <thead>
+                    <tr>
+                        <th>Viability: 7-10 wks</th>
+                        <th>Status</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>NT: 11-13+6</td>
+                        <td>{% if usg.r1_check %}
+                            Done
+                            {% else %}
+                            -
+                            {% endif %}</td>
+                        <td>{{usg.r1_comment}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>FTS</td>
+                        <td>{% if usg.r2_check %}
+                            Done
+                            {% else %}
+                            -
+                            {% endif %}</td>
+                        <td>{{usg.r2_comment}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>QUAD: 16-2- wks SOS</td>
+                        <td>{% if usg.r3_check %}
+                            Done
+                            {% else %}
+                            -
+                            {% endif %}</td>
+                        <td>{{usg.r3_comment}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Anomaly: 18-20 wks</td>
+                        <td>{% if usg.r4_check %}
+                            Done
+                            {% else %}
+                            -
+                            {% endif %}</td>
+                        <td>{{usg.r4_comment}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Eco: 22-24 wks</td>
+                        <td>{% if usg.r5_check %}
+                            Done
+                            {% else %}
+                            -
+                            {% endif %}</td>
+                        <td>{{usg.r5_comment}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Growth: 30 wks</td>
+                        <td>{% if usg.r6_check %}
+                            Done
+                            {% else %}
+                            -
+                            {% endif %}</td>
+                        <td>{{usg.r6_comment}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Growth: 34 wks SOS</td>
+                        <td>{% if usg.r7_check %}
+                            Done
+                            {% else %}
+                            -
+                            {% endif %}</td>
+                        <td>{{usg.r7_comment}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Growth: Growth/Liquor: 37-38 wks</td>
+                        <td>{% if usg.r8_check %}
+                            Done
+                            {% else %}
+                            -
+                            {% endif %}</td>
+                        <td>{{usg.r8_comment}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Fatal Weight</td>
+                        <td>{% if usg.r9_check %}
+                            Done
+                            {% else %}
+                            -
+                            {% endif %}</td>
+                        <td>{{usg.r9_comment}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <p>Instructions (IF ANY):-</p>
+    <p>{{ usg.instructions }}</p>
+    <hr><br><br>
+
+
+
+
+
+    <section>
+        <div class="tt">
+            <table class="tt-table">
+                <thead>
+
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TT - 1st Dose</td>
+                        <td>{{ttdose.tt1_date}}</td>
+                    </tr>
+                    <tr>
+                        <td>TT - 2nd Dose</td>
+                        <td>{{ttdose.tt2_date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <p>Instructions (IF ANY):-</p>
+    <p>{{ ttdose.instructions }}</p>
+    <hr><br>
+
+
+</body>
+
+</html>
